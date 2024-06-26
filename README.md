@@ -58,7 +58,7 @@ In summary, agents integrated with LLMs offer a pathway to mitigate their inhere
 The multi-agent system operates through a collaborative and iterative process, where each agent performs specialized tasks while interacting with other agents to achieve efficient and accurate task completion.
 It consists of 4 specialized agents, each with a distinct and designated role. Below is a detailed description of the working of the multi-agent system:
 
-![alt text](images\multiagent.png)
+![alt text](images/multiagent.png)
 
 - **Task Planner:**
 
