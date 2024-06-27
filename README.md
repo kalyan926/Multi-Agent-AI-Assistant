@@ -87,7 +87,7 @@ Score the performance of the Task Execution Agent output based on some predefine
   **Memory Integration to Evaluator:** Agent is equipped with evaluator memory that stores tuple of trail number, output, score for a subtask after the evaluation if evaluator scores below threshold.This historical trail data helps the Feedback Agent understand and review the output of a subtask and make informed modifications to improve output performance.
 
 - ### **Feedback Agent:**
-   The Feedback Agent has two roles:
+The Feedback Agent has two roles:
 
   **1.Error Handling:** If any error occurs during the execution of a subtask, the Task Executor passes the control to the Feedback Agent. The Feedback Agent modifies the context of the subtask to address the error and reexecutes it in the Task Executor to obtain an error-free output.
 
