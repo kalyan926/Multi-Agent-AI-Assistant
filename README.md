@@ -68,10 +68,7 @@ It consists of 4 specialized agents, each with a distinct and designated role. B
 
 - ### **Task Planner Agent**
 
-    - The process begins with the Task Planner agent receiving a goal from the user.
-    - The Task Planner Agent decomposes this goal into manageable subtasks, creating a detailed execution plan.
-    - Each subtask is defined with specific objectives, required tools, and relevant context information.
-    - The execution plan, consisting of the ordered subtasks, is passed to the Task Executor agent.
+The process begins with the Task Planner agent receiving a goal from the user.The Task Planner Agent decomposes this goal into manageable subtasks, creating a detailed execution plan.Each subtask is defined with specific objectives, required tools, and relevant context information.The execution plan, consisting of the ordered subtasks, is passed to the Task Executor agent.
 
 - ### **Task Executoion Agent:** 
 Executes the subtasks serially according to the plan.If any error occurs during the execution of subtask then it is managed by Feedback Agent else output is sent to Evaluator to assess the performance of the output.
@@ -87,14 +84,14 @@ Executes the subtasks serially according to the plan.If any error occurs during 
 - ### **Evaluator Agent:** 
 Score the performance of the Task Execution Agent output based on some predefined criteria,and if the score exceeds threshold then next subtask is executed else output is sent to Feedback agent for further processing.
 
-   **Memory Integration to Evaluator:**Agent is equipped with evaluator memory that stores tuple of trail number, output, score for a subtask after the evaluation if evaluator scores below threshold.This historical trail data helps the Feedback Agent understand and review the output of a subtask and make informed modifications to improve output performance.
+  **Memory Integration to Evaluator:** Agent is equipped with evaluator memory that stores tuple of trail number, output, score for a subtask after the evaluation if evaluator scores below threshold.This historical trail data helps the Feedback Agent understand and review the output of a subtask and make informed modifications to improve output performance.
 
 - ### **Feedback Agent:**
    The Feedback Agent has two roles:
 
-   **1.Error Handling:** If any error occurs during the execution of a subtask, the Task Executor passes the control to the Feedback Agent. The Feedback Agent modifies the context of the subtask to address the error and reexecutes it in the Task Executor to obtain an error-free output.
+  **1.Error Handling:** If any error occurs during the execution of a subtask, the Task Executor passes the control to the Feedback Agent. The Feedback Agent modifies the context of the subtask to address the error and reexecutes it in the Task Executor to obtain an error-free output.
 
-   **2.Improving Poorly Evaluated Outputs:** If the Evaluator scores the output of a subtask below the threshold, then Feedback Agent intervenes. It understand, reviews all the trails by analyzing score of the ouput for a subtask stored in evaluator memory and modifies the context of subtask corresponding to poorly evaluated output,then reexecutes the subtask in the Task Execution to achieve better scoring output.
+  **2.Improving Poorly Evaluated Outputs:** If the Evaluator scores the output of a subtask below the threshold, then Feedback Agent intervenes. It understand, reviews all the trails by analyzing score of the ouput for a subtask stored in evaluator memory and modifies the context of subtask corresponding to poorly evaluated output,then reexecutes the subtask in the Task Execution to achieve better scoring output.
 
 The multi-agent system operates in an iterative manner, with each subtask undergoing execution, evaluation, and potential feedback-driven reexecution until it meets the required standards.Once all subtasks in the execution plan are successfully completed and evaluated, the overall task is considered complete.The final output, along with detailed logs of the process, is provided to the user or the requesting entity.
 
