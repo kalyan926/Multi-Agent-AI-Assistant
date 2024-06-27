@@ -4,7 +4,7 @@
 [Introduction](#introduction)
 [Limitations of LLMs](#limitations-of-llms)
 [Implementation Details of the Multi-Agent System](#implementation-details-of-the-multi-agent-system)
-[Conclusion](#7-conclusion)
+[Conclusion](#conclusion)
 
 
 
@@ -89,9 +89,11 @@ Score the performance of the Task Execution Agent output based on some predefine
 
    **Memory Integration to Evaluator:**Agent is equipped with evaluator memory that stores tuple of trail number, output, score for a subtask after the evaluation if evaluator scores below threshold.This historical trail data helps the Feedback Agent understand and review the output of a subtask and make informed modifications to improve output performance.
 
-- ### _**Feedback Agent:**_
+- ### **Feedback Agent:**
    The Feedback Agent has two roles:
+
    **1.Error Handling:** If any error occurs during the execution of a subtask, the Task Executor passes the control to the Feedback Agent. The Feedback Agent modifies the context of the subtask to address the error and reexecutes it in the Task Executor to obtain an error-free output.
+
    **2.Improving Poorly Evaluated Outputs:** If the Evaluator scores the output of a subtask below the threshold, then Feedback Agent intervenes. It understand, reviews all the trails by analyzing score of the ouput for a subtask stored in evaluator memory and modifies the context of subtask corresponding to poorly evaluated output,then reexecutes the subtask in the Task Execution to achieve better scoring output.
 
 The multi-agent system operates in an iterative manner, with each subtask undergoing execution, evaluation, and potential feedback-driven reexecution until it meets the required standards.Once all subtasks in the execution plan are successfully completed and evaluated, the overall task is considered complete.The final output, along with detailed logs of the process, is provided to the user or the requesting entity.
@@ -123,10 +125,5 @@ While multi-agent AI systems offer significant advantages in enhancing LLM capab
 
 In summary, while multi-agent AI systems offer substantial benefits in augmenting LLM capabilities, they also face challenges related to fine-tuning, agent coordination, information exchange, and scalability. Addressing these challenges is crucial for developing robust and efficient multi-agent AI systems.
 
-### 7. Conclusion
-
-The emergence of large language models (LLMs) has significantly advanced AI's capabilities in natural language understanding and generation. However, their effectiveness in handling complex, real-world applications is limited by issues such as constrained reasoning, susceptibility to errors, lack of real-time connectivity, and absence of intrinsic memory. To address these limitations, integrating LLMs into agent-based systems has proven essential. Agents, which combine LLMs with specialized tools, memory systems, and reasoning frameworks, can significantly enhance LLM performance by improving task-specific accuracy, maintaining context, and adapting in real-time.
-
-Nevertheless, multi-agent systems present their own set of challenges, including the need for precise fine-tuning of LLMs, ensuring smooth agent coordination, managing efficient information exchange, and scaling the system without introducing excessive complexity. Despite these challenges, the collaborative and complementary nature of multi-agent systems provides a robust framework for overcoming the inherent limitations of LLMs.
-
-## In conclusion, while LLMs represent a substantial leap forward in AI, their integration into multi-agent systems is crucial for achieving higher-level cognitive functions required for complex tasks. By addressing the challenges associated with multi-agent systems, AI can reach new heights in robustness, adaptability, and overall intelligence, thereby bridging the gap between current capabilities and the demands of real-world applications.
+### Conclusion
+In conclusion, while LLMs represent a substantial leap forward in AI, their integration into multi-agent systems is crucial for achieving higher-level cognitive functions required for complex tasks. By addressing the challenges associated with multi-agent systems, AI can reach new heights in robustness, adaptability, and overall intelligence, thereby bridging the gap between current capabilities and the demands of real-world applications.
