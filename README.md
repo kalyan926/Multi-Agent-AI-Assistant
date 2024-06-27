@@ -1,6 +1,13 @@
 ### Multi-Agent AI Assitance
 
 ---
+[Introduction](#introduction)
+[Limitations of LLMs](#limitations-of-llms)
+[Implementation Details of the Multi-Agent System](#implementation-details-of-the-multi-agent-system)
+[Conclusion](#7-conclusion)
+
+
+
 
 ### Introduction
 
@@ -73,19 +80,19 @@ Executes the subtasks serially according to the plan.If any error occurs during 
 
   **Relevance and Accuracy with RAG:** Often times tools give more information than required to task, this can cause problems such as priming the llms,hallucinations and prompt injection.Retrieval-Augmented Generation (RAG) is employed between the tools output and before the start of llm reasoning to filter and provide only relevant information to the language models, preventing hallucinations, prompt injections, priming and ensuring that the context remains pertinent to the task at hand. This enhances the reliability and accuracy of the agents outputs.
 
-  **Tools Integration:**Agent integrates real-time tools to access accurate and current information, ensuring that each subtask is executed with up-to-date data. This integration also includes variety of tools tailored to perform broad range of tasks accurately and efficiently to enhance the overall performance of the Agent.
+  **Tools Integration:** Agent integrates real-time tools to access accurate and current information, ensuring that each subtask is executed with up-to-date data. This integration also includes variety of tools tailored to perform broad range of tasks accurately and efficiently to enhance the overall performance of the Agent.
 
-  **Execution Memory:**Agent is equipped with execution memory that store intermediate results of previous subtasks and context, allowing for better continuity and coherence in task execution. This memory integration ensures that agents can build upon previous work and make informed decisions for subsequent tasks.
+  **Execution Memory:** Agent is equipped with execution memory that store intermediate results of previous subtasks and context, allowing for better continuity and coherence in task execution. This memory integration ensures that agents can build upon previous work and make informed decisions for subsequent tasks.
 
 - ### **Evaluator Agent:** 
 Score the performance of the Task Execution Agent output based on some predefined criteria,and if the score exceeds threshold then next subtask is executed else output is sent to Feedback agent for further processing.
 
    **Memory Integration to Evaluator:**Agent is equipped with evaluator memory that stores tuple of trail number, output, score for a subtask after the evaluation if evaluator scores below threshold.This historical trail data helps the Feedback Agent understand and review the output of a subtask and make informed modifications to improve output performance.
 
-- ## *Feedback Agent:**
+- ### _**Feedback Agent:**_
    The Feedback Agent has two roles:
-   1.**Error Handling:** If any error occurs during the execution of a subtask, the Task Executor passes the control to the Feedback Agent. The Feedback Agent modifies the context of the subtask to address the error and reexecutes it in the Task Executor to obtain an error-free output.
-   2.**Improving Poorly Evaluated Outputs:** If the Evaluator scores the output of a subtask below the threshold, then Feedback Agent intervenes. It understand, reviews all the trails by analyzing score of the ouput for a subtask stored in evaluator memory and modifies the context of subtask corresponding to poorly evaluated output,then reexecutes the subtask in the Task Execution to achieve better scoring output.
+   **1.Error Handling:** If any error occurs during the execution of a subtask, the Task Executor passes the control to the Feedback Agent. The Feedback Agent modifies the context of the subtask to address the error and reexecutes it in the Task Executor to obtain an error-free output.
+   **2.Improving Poorly Evaluated Outputs:** If the Evaluator scores the output of a subtask below the threshold, then Feedback Agent intervenes. It understand, reviews all the trails by analyzing score of the ouput for a subtask stored in evaluator memory and modifies the context of subtask corresponding to poorly evaluated output,then reexecutes the subtask in the Task Execution to achieve better scoring output.
 
 The multi-agent system operates in an iterative manner, with each subtask undergoing execution, evaluation, and potential feedback-driven reexecution until it meets the required standards.Once all subtasks in the execution plan are successfully completed and evaluated, the overall task is considered complete.The final output, along with detailed logs of the process, is provided to the user or the requesting entity.
 
