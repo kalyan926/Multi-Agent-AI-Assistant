@@ -2,9 +2,12 @@
 
 ---
 
-[Introduction](#introduction)
-[Limitations of LLMs](#limitations-of-llms)
-[Implementation Details of the Multi-Agent System](#implementation-details-of-the-multi-agent-system)
+[Introduction,](#introduction)
+[Limitations of LLMs,](#limitations-of-llms)
+[What is an Agent and How it Can Solve LLM Problems?,](#what-is-an-agent-and-how-it-can-solve-llm-problems)
+[Why the Need for Multi-Agent Systems?,](#why-the-need-for-multi-agent-systems)
+[Implementation Details of the Multi-Agent System,](#implementation-details-of-the-multi-agent-system)
+[Problems with Multi-Agent AI Systems,](#problems-with-multi-agent-ai-systems)
 [Conclusion](#conclusion)
 
 ### Introduction
