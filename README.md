@@ -17,15 +17,15 @@ Large language models (LLMs) are remarkable achievements in the field of AI, cap
 
 Large language models (LLMs) have made significant advancements in natural language processing tasks, but they come with several limitations:
 
-- **Constrained Reasoning Abilities** LLMs struggle with complex logical inferences and deep understanding, relying on statistical patterns rather than true cognition.
+- **Constrained Reasoning Abilities:** LLMs struggle with complex logical inferences and deep understanding, relying on statistical patterns rather than true cognition.
 
-- **Hallucinations** LMs can generate factually factually incorrect or nonsensical outputs that seem plausible, caused by data interpolation and overfitting to training data.
+- **Hallucinations:** LLMs can generate factually factually incorrect or nonsensical outputs that seem plausible, caused by data interpolation and overfitting to training data.
 
-- **Prompt Sensitivity** Small changes in prompt wording can lead to significantly different responses, complicating consistency and reliability in generated outputs.
+- **Prompt Sensitivity:** Small changes in prompt wording can lead to significantly different responses, complicating consistency and reliability in generated outputs.
 
-- **Limited Real-Time Connectivity** LLMs cannot access or integrate information beyond their training cut-off, lacking awareness of post-training data or events.
+- **Limited Real-Time Connectivity:** LLMs cannot access or integrate information beyond their training cut-off, lacking awareness of post-training data or events.
 
-- **Absence of Intrinsic Memory** LLMs do not remember past interactions, requiring repeated context provision and lacking personalization or context-awareness over multiple sessions.
+- **Absence of Intrinsic Memory:** LLMs do not remember past interactions, requiring repeated context provision and lacking personalization or context-awareness over multiple sessions.
 
 ### What is an Agent and How it Can Solve LLM Problems
 
