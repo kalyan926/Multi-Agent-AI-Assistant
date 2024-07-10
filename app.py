@@ -2,7 +2,7 @@ import streamlit as st
 from multiagent import multiagent
 
 input={
-    "goal":"when is the release of kalki 2898 AD movie",
+    "goal":"",
     "subtasks":list ,   #sub_tasks
    #"task_output":str   #output of execution
    #"task_input":str

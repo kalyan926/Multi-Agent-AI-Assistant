@@ -60,40 +60,6 @@ tools=[wikipedia_tool,stock_price]
 llm=ChatOpenAI(temperature=0,model="gpt-4-0125-preview")
 
 
-def relevant_output(information):
-    
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    print(information)
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-
-    if(len(information)==0):
-        return [AIMessage(content="")]
-    
-
-    output=[]
-    for agent_action, observation in information:
-        text_splitter=RecursiveCharacterTextSplitter(chunk_size=300,chunk_overlap=0)
-        documents=text_splitter.create_documents([observation])
-        split_docs=text_splitter.split_documents(documents)
-        db=FAISS.from_documents(split_docs,OpenAIEmbeddings())
-
-        docs = db.similarity_search(agent_action.tool_input)
-        
-        for i in range(len(docs)):
-            output.append(docs[i].page_content)
-
-        output=" ".join(output)
-        print("***********************************************************")
-        print(output)
-        print("***********************************************************")
-        
-        return [FunctionMessage(name=agent_action.tool,content=output)]
-
-
-
-
-
 class AgentState(TypedDict):
     goal:str
     subtasks:list     #sub_tasks
@@ -107,6 +73,36 @@ class AgentState(TypedDict):
     score:float
     out_e:any
     error:any
+
+
+
+
+#RAG to get relavant output from the tool output
+
+def relevant_output(information,state):
+    
+
+    if(len(information)==0):
+        return [AIMessage(content="")]
+    
+    output=[]
+    for agent_action, observation in information:
+        text_splitter=RecursiveCharacterTextSplitter(chunk_size=300,chunk_overlap=0)
+        documents=text_splitter.create_documents([observation])
+        split_docs=text_splitter.split_documents(documents)
+        db=FAISS.from_documents(split_docs,OpenAIEmbeddings())
+        
+        #agent_action.tool_input
+        docs = db.similarity_search(state["task_input"])
+        
+        for i in range(len(docs)):
+            output.append(docs[i].page_content)
+
+        output=" ".join(output)
+        
+        return [FunctionMessage(name=agent_action.tool,content=output)]
+
+
 
 
 
@@ -159,7 +155,7 @@ def task_execution_agent(state):
 
 
     agent = (
-            RunnablePassthrough.assign( agent_scratchpad=lambda x: relevant_output(x["intermediate_steps"]) )
+            RunnablePassthrough.assign( agent_scratchpad=lambda x: relevant_output(x["intermediate_steps"],state) )
             | prompt_e
             | llm_with_tools
             | OpenAIToolsAgentOutputParser()
@@ -183,7 +179,7 @@ def task_execution_agent(state):
 
 score_memory=[]
 
-def evaluate_output(state):
+def evaluator_agent(state):
 
     system_prompt="""you are an expert critic and analyzer who analyzes the output of the task and scores the output between 1 and 10
     based on the objectives.
@@ -227,7 +223,7 @@ def evaluate_output(state):
 
     return state
 
-
+#Feedback Agent
 
 def feedback_agent(state):
     
@@ -236,8 +232,7 @@ def feedback_agent(state):
     system_prompt=""
     user_input=""
     if(state["evaluate_state"]=="rexecute"):
-        
-        print("thresholddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")        
+            
         system_prompt=system_threshold
         i=1
         for human ,ai,score in score_memory:
@@ -245,7 +240,6 @@ def feedback_agent(state):
             i=i+1
             
     else:
-        print("errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
         system_prompt=system_error
         user_input=state["error"]   
 
@@ -261,7 +255,7 @@ def feedback_agent(state):
 
     return state
 
-# task planner,task_execution_agent,evaluate_output,feedback_agent
+# task planner,task_execution_agent,evaluator_agent,feedback_agent
 
 
 
@@ -269,7 +263,7 @@ graph=StateGraph(AgentState)
 
 graph.add_node("planner",task_planner)
 graph.add_node("executor",task_execution_agent)
-graph.add_node("evaluator",evaluate_output)
+graph.add_node("evaluator",evaluator_agent)
 graph.add_node("feedback",feedback_agent)
 
 graph.set_entry_point("planner")
@@ -298,21 +292,3 @@ graph.add_conditional_edges("evaluator",evaluate_to_go,{"executor":"executor","f
 
 
 multiagent=graph.compile()
-
-'''
-for output in multiagent.stream(input):
-    # stream() yields dictionaries with output keyed by node name
-    for key, value in output.items():
-        print(f"Output from node '{key}':")
-        print("---")
-        print(value)
-    print("\n---\n")
-
-'''
-#print(input["subtasks"])
-
-'''
-
-
-    
-'''
